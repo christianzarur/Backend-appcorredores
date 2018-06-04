@@ -3,6 +3,8 @@ var bcrypt = require('bcrypt-nodejs');
 var User = require('../models/user');
 var jwt = require('../services/jwt');
 var mongoosePaginate = require('mongoose-pagination');
+var fs = require('fs');
+var path =  require('path');
 
 function home(req, res) {
     res.status(200).send({
@@ -153,14 +155,60 @@ function updateUser(req, res) {
 function uploadImagen(req, res) {
     var userId = req.params.id;
 
-    if(userId != req.user.sub){
-        return res.status(500).send({message: 'No tienes permiso para actualizar los datos del usuario'});
-    }
+   
     if (req.files) {
-        var file_path = req.files.image.path;
+        var file_path = req.files.imagen.path;
         console.log(file_path);
-        var file_split = file_path.file_split('\\');
+
+        var file_split = file_path.split('\\');
+        console.log(file_split);
+
+        var file_name = file_split[2];
+        console.log(file_name);
+
+        var ext_split = file_name.split('\.');
+        console.log(ext_split);
+
+        var file_ext = ext_split[1];
+        console.log(file_ext);
+
+        if(userId != req.user.sub){
+            return removeFilesOfUploads(res, file_path, 'No tienes permiso para actualizar los datos del usuario');
+        }
+        if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext =='gif') {
+            //actualizar documento de usuario logueado
+            User.findByIdAndUpdate(userId,{imagen: file_name}, {new: true}, (err, userUpdated) =>{
+               if (err) return res.status(500).send({ message: 'No tienes permiso para actualizar los datos del usuario'});
+
+               if (!userUpdated) return res.status(404).send({message: 'No se ha podido actualizar el usuario'});
+                
+               return res.status(200).send({user: userUpdated});
+            });
+        } else {
+            return removeFilesOfUploads(res, file_path, 'Extension no valida')
+        }
+    }else{
+        return res.status(200).send({message: 'No se han subido imagenes'});
     }
+}
+
+function removeFilesOfUploads (res, file_path, message){
+    fs.unlink(file_path, (err) => {
+        return res.status(200).send({message: message});
+    });
+}
+
+function getImageFile(req, res) {
+    var image_file = req.params.imageFile
+    var path_file = './uploads/users/'+image_file;
+
+    fs.exists(path_file, (exists) =>{
+        if (exists){
+            res.sendFile(path.resolve(path_file));
+        }else{
+            res.status(200.).send({message: 'No existe la imagen'});
+        }
+    });
 }
 
 module.exports = {
@@ -171,5 +219,6 @@ module.exports = {
     getUser,
     getUsers,
     updateUser,
-    uploadImagen
+    uploadImagen,
+    getImageFile
 }
