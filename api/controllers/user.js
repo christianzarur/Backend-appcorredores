@@ -2,6 +2,7 @@
 var bcrypt = require('bcrypt-nodejs');
 var User = require('../models/user');
 var jwt = require('../services/jwt');
+var mongoosePaginate = require('mongoose-pagination');
 
 function home(req, res) {
     res.status(200).send({
@@ -15,6 +16,7 @@ function pruebas(req, res) {
     });
 }
 
+//REGISTRO
 function saveUser(req, res) {
     var params = req.body;
     var user = new User();
@@ -60,6 +62,7 @@ function saveUser(req, res) {
             }
 }
 
+//LOGIN
 function loginUser(req, res) {
     var params = req.body;
     var email = params.email;
@@ -87,11 +90,48 @@ function loginUser(req, res) {
              return res.status(404).send({message: 'El usuario no se ha podido identificar!!'});
         }
     });
-
 }
+
+//CONSEGUIR DATOS DE UN USUARIO
+function getUser(req, res) {
+    var userId = req.params.id;
+
+    User.findById(userId, (err, user)=>{
+        if (err) return res.status(500).send({message: 'Error en la peticion'});
+
+        if (!user) return res.status(404).send({message: 'El usuario no existe'});
+
+        return res.status(200).send({user});
+    });
+}
+
+//DEVOLVER UN LISTADO DE USUARIOS REGISTRADOS
+function getUsers(req, res) {
+    var identity_user_id = req.user.sub;
+    var page = 1;
+    if(req.params.page){
+        page =req.params.page;
+    }
+    var itemsPerPage = 5;
+
+    User.find().sort('_id').paginate(page, itemsPerPage, (err, users, total) =>{
+        if (err) return res.status(500).send({message: 'Error en la peticion'});
+
+        if (!users) return res.status(404).send({message: 'No hay usuarios disponibles'});
+
+        return res.status(200).send({
+            users,
+            total,
+            pages: Math.ceil(total/itemsPerPage)
+        });
+    });
+}
+
 module.exports = {
     home,
     pruebas,
     saveUser,
-    loginUser
+    loginUser,
+    getUser,
+    getUsers
 }
