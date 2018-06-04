@@ -1,6 +1,7 @@
 'use strict'
 var bcrypt = require('bcrypt-nodejs');
 var User = require('../models/user');
+var jwt = require('../services/jwt');
 
 function home(req, res) {
     res.status(200).send({
@@ -45,16 +46,14 @@ function saveUser(req, res) {
 
                         if(userStored){
                             res.status(200).send({user: userStored});
-                        }
-                        else{
+                        }else{
                             res.status(404).send({message: 'No se ha registrado el usuario'});
                         }
                     });
                 });
             }
         });
-    }
-    else{
+    }else{
                 res.status(200).send({
                 message: 'Envia todos los campos necesarios'
                 })
@@ -72,17 +71,20 @@ function loginUser(req, res) {
         if (user){
             bcrypt.compare(password, user.password, (err, check) => {
                 if (check){
-                    //devolver datos de usuario
+                    if (params.gettoken) {
+                        //GENERAR Y DEVOLVER TOKEN
+                        return res.status(200).send({token: jwt.createToken(user)})
+                    }else{
+                    //DEVOLVER DATOS DEL USUARIO SIN MOSTRAR CONTRASEÑA
                     user.password = undefined;
                     return res.status(200).send({user});
-                }
-                else{
+                    }   
+                }else{
                     return res.status(404).send({message: 'El usuario no se ha podido identificar'});
                 }
             });
-        }
-        else{
-             return res.status(404).send({message: 'El usuario no se ha podido identificar'});
+        }else{
+             return res.status(404).send({message: 'El usuario no se ha podido identificar!!'});
         }
     });
 
