@@ -104,13 +104,38 @@ function getUser(req, res) {
 
         if (!user) return res.status(404).send({message: 'El usuario no existe'});
 
-        Follow.findOne({"user": req.user.sub, "seguido": userId}).exec((err, follow)=>{
-            if (err) return res.status(500).send({message: 'Error al comprobar el seguimiento'});
-
-            return res.status(200).send({user, follow});
+        followThisUser(req.user.sub, userId).then((value)=>{
+            user.password = undefined;
+            return res.status(200).send({
+                user, 
+                following: value.following,
+                followed: value.followed});
         });
-        
     });
+}
+
+async function followThisUser(identity_user_id, user_id) {
+    try {
+        var following = await Follow.findOne({user: identity_user_id,seguido: user_id}).exec().then((following) => {
+                return following;
+            })
+            .catch((err) => {
+                return handleError(err);
+            });
+        var followed = await Follow.findOne({user: user_id,seguido: identity_user_id}).exec().then((followed) => {
+            return followed;
+            })
+            .catch((err) => {
+            return handleError(err);
+        });
+
+        return {
+            following: following,
+            followed: followed
+        }
+    } catch (err) {
+        return handleError(err);
+    }
 }
 
 //DEVOLVER UN LISTADO DE USUARIOS REGISTRADOS
