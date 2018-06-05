@@ -203,6 +203,43 @@ async function followUserIds(user_id) {
     }
 }
 
+function getCounters(req, res) {
+    var userId = req.user.sub;
+    if (req.params.id) {
+        userId = req.params.id;
+    }
+    getCountFollow(userId).then((value)=>{
+        return res.status(200).send(value);
+    });
+
+}
+
+async function getCountFollow(user_id) {
+    try {
+        var following = await Follow.count({"user": user_id}).exec().then(count => {
+                return count;
+            })
+            .catch((err) => {
+                return handleError(err);
+            });
+
+        var followed = await Follow.count({"seguido": user_id}).exec().then(count => {
+                return count;
+            })
+            .catch((err) => {
+                return handleError(err);
+            });
+
+        return {
+            following: following,
+            followed: followed
+        }
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 //EDICION DE DATOS DE USUARIO
 function updateUser(req, res) {
     var userId = req.params.id;
@@ -292,6 +329,7 @@ module.exports = {
     loginUser,
     getUser,
     getUsers,
+    getCounters,
     updateUser,
     uploadImagen,
     getImageFile
