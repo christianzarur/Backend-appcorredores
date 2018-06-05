@@ -4,7 +4,8 @@ var User = require('../models/user');
 var jwt = require('../services/jwt');
 var mongoosePaginate = require('mongoose-pagination');
 var fs = require('fs');
-var path =  require('path');
+var path = require('path');
+var Follow = require('../models/follow');
 
 function home(req, res) {
     res.status(200).send({
@@ -103,7 +104,12 @@ function getUser(req, res) {
 
         if (!user) return res.status(404).send({message: 'El usuario no existe'});
 
-        return res.status(200).send({user});
+        Follow.findOne({"user": req.user.sub, "seguido": userId}).exec((err, follow)=>{
+            if (err) return res.status(500).send({message: 'Error al comprobar el seguimiento'});
+
+            return res.status(200).send({user, follow});
+        });
+        
     });
 }
 
