@@ -14,7 +14,7 @@ api.get('/users/:page?', md_auth.ensureAuth, UserController.getUsers);
 api.get('/get-imagen-user/:imageFile', UserController.getImageFile);
 
 
-api.post('/register', UserController.saveUser);
+api.post('/registro', UserController.saveUser);
 api.post('/login', UserController.loginUser);
 api.post('/upload-imagen-user/:id', [md_auth.ensureAuth, md_upload], UserController.uploadImagen);
 
