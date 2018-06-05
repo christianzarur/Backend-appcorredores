@@ -151,13 +151,56 @@ function getUsers(req, res) {
         if (err) return res.status(500).send({message: 'Error en la peticion'});
 
         if (!users) return res.status(404).send({message: 'No hay usuarios disponibles'});
-
-        return res.status(200).send({
-            users,
-            total,
-            pages: Math.ceil(total/itemsPerPage)
+        followUserIds(identity_user_id).then((value)=>{
+            return res.status(200).send({
+                users,
+                users_following: value.following,
+                users_follow_me: value.followed,
+                total,
+                pages: Math.ceil(total/itemsPerPage)
+            });
         });
+        
     });
+}
+
+async function followUserIds(user_id) {
+    try {
+        var following = await Follow.find({"user": user_id}).select({'_id': 0,'__v': 0,'user': 0}).exec().then((follows) => {
+                return follows;
+            })
+            .catch((err) => {
+                return handleError(err)
+            });
+
+        var followed = await Follow.find({"seguido": user_id}).select({'_id': 0,'__v': 0,'seguido': 0}).exec().then((follows) => {
+                return follows;
+            })
+            .catch((err) => {
+                return handleError(err)
+            });
+
+        //Procesar following Ids
+        var following_clean = [];
+
+        following.forEach((follow) => {
+            following_clean.push(follow.seguido);
+        });
+
+        //Procesar followed Ids
+        var followed_clean = [];
+
+        followed.forEach((follow) => {
+            followed_clean.push(follow.user);
+        });
+        return {
+            following: following_clean,
+            followed: followed_clean
+        }
+
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 //EDICION DE DATOS DE USUARIO
