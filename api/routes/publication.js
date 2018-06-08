@@ -1,19 +1,21 @@
 'use strict'
 
 var express = require('express');
-var PublicactionController = require('../controllers/publication');
+var PublicationController = require('../controllers/publication');
 var api = express.Router();
 var md_auth = require('../middlewares/authenticated');
 
 var multipart = require('connect-multiparty');
 var md_upload = multipart({uploadDir: './uploads/publications'});
 
-api.get('/probando-pub', md_auth.ensureAuth, PublicactionController.probando);
-api.get('/publications/:page?', md_auth.ensureAuth, PublicactionController.getPublications);
-api.get('/publication/:id', md_auth.ensureAuth, PublicactionController.getPublication);
+api.get('/probando-pub', md_auth.ensureAuth, PublicationController.probando);
+api.get('/publications/:page?', md_auth.ensureAuth, PublicationController.getPublications);
+api.get('/publication/:id', md_auth.ensureAuth, PublicationController.getPublication);
+api.get('/get-image-pub/:id', PublicationController.getImageFile);
 
-api.post('/publication', md_auth.ensureAuth, PublicactionController.savePublication);
+api.post('/publication', md_auth.ensureAuth, PublicationController.savePublication);
+api.post('/upload-image-pub/:id', [md_auth.ensureAuth, md_upload], PublicationController.uploadImagen);
 
-api.delete('/publication/:id', md_auth.ensureAuth, PublicactionController.deletePublication);
+api.delete('/publication/:id', md_auth.ensureAuth, PublicationController.deletePublication);
 
 module.exports = api;
