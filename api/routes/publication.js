@@ -10,6 +10,7 @@ var md_upload = multipart({uploadDir: './uploads/publications'});
 
 api.get('/probando-pub', md_auth.ensureAuth, PublicactionController.probando);
 api.get('/publications/:page?', md_auth.ensureAuth, PublicactionController.getPublications);
+api.get('/publication/:id?', md_auth.ensureAuth, PublicactionController.getPublication);
 
 api.post('/publication', md_auth.ensureAuth, PublicactionController.savePublication);
 
