@@ -102,10 +102,24 @@ function getMensajesNoVistos(req, res) {
     });
 }
 
+function setMensajesVistos(req, res) {
+    var userId = req.user.sub;
+
+    Mensaje.update({receptor: userId, visto:'false'}, {visto: 'true'},{"multi": true}, (err, mensajesUpdated)=>{
+        if (err) {
+            return res.status(500).send({message: 'Error en la petición'});
+        }
+        return res.status(200).send({
+            messages: mensajesUpdated
+        });
+    });
+}
+
 module.exports = {
     probando,
     SaveMensaje,
     getReceivedMensajes,
     getEmmitedMensajes,
-    getMensajesNoVistos
+    getMensajesNoVistos,
+    setMensajesVistos
 }
