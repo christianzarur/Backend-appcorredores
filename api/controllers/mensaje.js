@@ -36,7 +36,59 @@ function SaveMensaje(req, res) {
     });
 }
 
+function getReceivedMensajes(req, res) {
+    var userId = req.user.sub;
+
+    var page = 1;
+    if(req.params.page){
+        page = req.params.page;
+    }
+    var itemsPerPage = 4;
+
+    Mensaje.find({receptor: userId}).populate('emisor', 'nombre apellido imagen nick _id').paginate(page, itemsPerPage, (err, mensajes, total)=>{
+        if (err) {
+            return res.status(500).send({message: 'Error en la petición'});
+        }
+        if (!mensajes) {
+            return res.status(404).send({message: 'No hay mensajes que mostrar'});
+        }
+
+        return res.status(200).send({
+            total: total,
+            pages: Math.ceil(total/itemsPerPage),
+            mensajes
+        });
+    });
+}
+
+function getEmmitedMensajes(req, res) {
+    var userId = req.user.sub;
+
+    var page = 1;
+    if (req.params.page) {
+        page = req.params.page;
+    }
+    var itemsPerPage = 4;
+
+    Mensaje.find({emisor: userId}).populate('emisor receptor', 'nombre apellido imagen nick _id').paginate(page, itemsPerPage, (err, mensajes, total) => {
+        if (err) {
+            return res.status(500).send({message: 'Error en la petición'});
+        }
+        if (!mensajes) {
+            return res.status(404).send({message: 'No hay mensajes que mostrar'});
+        }
+
+        return res.status(200).send({
+            total: total,
+            pages: Math.ceil(total / itemsPerPage),
+            mensajes
+        });
+    });
+}
+
 module.exports = {
     probando,
-    SaveMensaje
+    SaveMensaje,
+    getReceivedMensajes,
+    getEmmitedMensajes
 }
