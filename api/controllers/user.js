@@ -218,18 +218,18 @@ function getCounters(req, res) {
 async function getCountFollow(user_id) {
     try {
         var following = await Follow.count({"user": user_id}).exec().then(count => {
-                return count;
-            })
-            .catch((err) => {
-                return handleError(err);
-            });
+            return count;
+        })
+        .catch((err) => {
+            return handleError(err);
+        });
 
         var followed = await Follow.count({"seguido": user_id}).exec().then(count => {
-                return count;
-            })
-            .catch((err) => {
-                return handleError(err);
-            });
+            return count;
+        })
+        .catch((err) => {
+            return handleError(err);
+        });
         
         var publications = await Publication.count({"user": user_id}).exec().then(count =>{
             return count;
