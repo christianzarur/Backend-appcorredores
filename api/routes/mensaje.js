@@ -8,6 +8,7 @@ var md_auth = require('../middlewares/authenticated');
 api.get('/probando-msj', md_auth.ensureAuth, MensajeControler.probando);
 api.get('/mis-mensajes/:page?', md_auth.ensureAuth, MensajeControler.getReceivedMensajes);
 api.get('/mensajes-enviados/:page?', md_auth.ensureAuth, MensajeControler.getEmmitedMensajes);
+api.get('/mensajes-no-vistos/:page?', md_auth.ensureAuth, MensajeControler.getMensajesNoVistos);
 
 api.post('/mensaje', md_auth.ensureAuth, MensajeControler.SaveMensaje);
 

@@ -23,6 +23,7 @@ function SaveMensaje(req, res) {
     mensaje.receptor = params.receptor;
     mensaje.contenido = params.contenido;
     mensaje.fecha = moment().unix();
+    mensaje.visto = 'false';
 
     mensaje.save((err, mensajeStored) => {
         if (err) {
@@ -86,9 +87,25 @@ function getEmmitedMensajes(req, res) {
     });
 }
 
+function getMensajesNoVistos(req, res) {
+    var userId = req.user.sub;
+
+    Mensaje.count({receptor: userId, visto:'false'}).exec((err, count)=>{
+        if (err) {
+            return res.status(500).send({message: 'Error en la petición'});
+        }
+
+        return res.status(200).send({
+            'No visto': count
+        })
+
+    });
+}
+
 module.exports = {
     probando,
     SaveMensaje,
     getReceivedMensajes,
-    getEmmitedMensajes
+    getEmmitedMensajes,
+    getMensajesNoVistos
 }
