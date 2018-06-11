@@ -11,6 +11,8 @@ import { UserService } from "../../services/user.service";
 export class RegisterComponent implements OnInit {
   public title: string;
   public user: User;
+  public status: string;
+
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
@@ -31,7 +33,21 @@ export class RegisterComponent implements OnInit {
     console.log('Componente de registro cargando...');
   }
 
-  onSubmit(){
-    this._userService.register(this.user);
+  onSubmit(registerForm){
+    this._userService.register(this.user).subscribe(
+      response => {
+        if (response.user && response.user._id) {
+          //console.log(response.user);
+          registerForm.reset();
+          this.status = 'exitoso';
+        }else{
+          this.status = 'error';
+        }
+      },
+      error=>{
+        console.log(<any>error);
+        
+      }
+    );
   }
 }
