@@ -14,8 +14,18 @@ export class UserService {
 
     register(user: User): Observable<any>{
         let params = JSON.stringify(user);
-        let headers = new HttpHeaders().set('Content-type', 'application/json')
+        let headers = new HttpHeaders().set('Content-type', 'application/json');
 
         return this._http.post(this.url +'registro', params, {headers:headers})
+    }
+
+    singup (user: User, gettoken = null): Observable<any>{
+        if (gettoken != null) {
+            user.gettoken = gettoken;
+        }
+        let params = JSON.stringify(user);
+        let headers = new HttpHeaders().set('Content-type', 'application/json');
+
+        return this._http.post(this.url + 'login', params, { headers: headers })
     }
 }
