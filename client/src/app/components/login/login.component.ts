@@ -48,6 +48,10 @@ export class LoginComponent implements OnInit {
           this.status = 'error';
         }else{
           this.status = 'success'
+          // persistir datos del usuario
+          localStorage.setItem('identity', JSON.stringify(this.identity));
+
+          //conseguir el token
           this.getToken();
         }
         this.status = 'exitoso';
@@ -70,9 +74,13 @@ export class LoginComponent implements OnInit {
         if (this.token.lenght <= 0) {
           this.status = 'error';
         } else {
-          this.status = 'success'
+          this.status = 'exitoso';
+          
+          // persistir el token
+          localStorage.setItem('token', this.token);
+          //conseguir los contadores o estadistias del usuario
         }
-        this.status = 'exitoso';
+
 
       },
       error => {
