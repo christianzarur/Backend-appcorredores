@@ -47,7 +47,6 @@ export class LoginComponent implements OnInit {
         if (!this.identity || !this.identity._id) {
           this.status = 'error';
         }else{
-          this.status = 'success'
           // persistir datos del usuario
           localStorage.setItem('identity', JSON.stringify(this.identity));
 
@@ -74,16 +73,12 @@ export class LoginComponent implements OnInit {
         if (this.token.lenght <= 0) {
           this.status = 'error';
         } else {
-          this.status = 'exitoso';
           
           // persistir el token
           localStorage.setItem('token', this.token);
           //conseguir los contadores o estadistias del usuario
-
-          this._router.navigate(['/']);
+          this.getCounters();
         }
-
-
       },
       error => {
         var errorMsj = <any>error;
@@ -92,6 +87,20 @@ export class LoginComponent implements OnInit {
         }
       }
     );
+  }
+
+  getCounters(){
+    this._userService.getCounters().subscribe(
+      response => {
+        localStorage.setItem('stats', JSON.stringify(response));
+        this.status = 'exitoso';
+        this._router.navigate(['/']);
+      },
+      error => {
+        console.log(<any>error)
+      
+      }
+    )
   }
 }
 
