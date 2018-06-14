@@ -28,7 +28,7 @@
     </ul>
 
 
-    <ul class="navbar-nav nav-tabs "*ngIf="!identity" >
+    <ul class="navbar-nav navbar-right " *ngIf="!identity">
       <li class="nav-item active">
         <a class="nav-link" [routerLink]="['/login']" [routerLinkActive]="['active']">
           <i class="fas fa-sign-in-alt"></i> Login
@@ -42,6 +42,28 @@
         </a>
       </li>
     </ul>
+
+    <ul class="navbar-nav navbar-right" *ngIf="identity">
+      <li class="avatar">
+        <!-- cargar imagen del usuario -->
+      </li>
+
+      <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+        {{identity.nombre}}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="#">
+        <i class="fas fa-id-badge"></i> Mi perfil</a>
+        <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Mis datos</a>
+        <div class="dropdown-divider"></div>
+        <a class="btn"  (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+      </div>
+      </li>
+
+    </ul>
+
 
   </div>
 </nav>

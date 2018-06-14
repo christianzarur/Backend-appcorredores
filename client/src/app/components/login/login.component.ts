@@ -79,6 +79,8 @@ export class LoginComponent implements OnInit {
           // persistir el token
           localStorage.setItem('token', this.token);
           //conseguir los contadores o estadistias del usuario
+
+          this._router.navigate(['/']);
         }
 
 
