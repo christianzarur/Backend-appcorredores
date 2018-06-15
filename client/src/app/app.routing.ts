@@ -13,7 +13,7 @@ const appRoutes: Routes =[
     {path: 'home', component: HomeComponent },
     {path: 'login', component: LoginComponent},
     {path: 'registro', component: RegisterComponent},
-    {path: 'mis-datos', component: UserEditComponent },
+    {path: 'mis-datos', component: UserEditComponent},
 
     //{path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];
