@@ -55,7 +55,8 @@
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" href="#">
         <i class="fas fa-id-badge"></i> Mi perfil</a>
-        <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Mis datos</a>
+        <a class="dropdown-item" [routerLink]="['/mis-datos']" >
+        <i class="fas fa-user"></i> Mis datos</a>
         <div class="dropdown-divider"></div>
         <a class="btn"  (click)="logout()">
         <i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
