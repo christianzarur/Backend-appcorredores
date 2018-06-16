@@ -12,6 +12,7 @@ import { GLOBAL } from '../../services/global';
 })
 export class UsersComponent implements OnInit {
   public title: string;
+  public url: string;
   public identity;
   public token;
   public status: string;
@@ -28,6 +29,7 @@ export class UsersComponent implements OnInit {
     private _userService: UserService
   ) {
     this.title = 'Gente';
+    this.url = GLOBAL.url;
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
    }
@@ -66,8 +68,9 @@ export class UsersComponent implements OnInit {
           this.total = response.total;
           this.users = response.users;
           this.pages = response.pages;
+          console.log(this.pages);
           if (page > this.pages) {
-            this._router.navigate(['/gente, 1']);
+            this._router.navigate(['/gente', 1]);
           }
         }
       },
