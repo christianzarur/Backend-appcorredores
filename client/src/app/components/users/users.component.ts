@@ -43,12 +43,16 @@ export class UsersComponent implements OnInit {
     this._route.params.subscribe(params =>{
       let page = +params['page'];
       this.page = page;
-
+      
+      if (!params['page']){
+        page = 1;
+      }
       if (!page) {
         page = 1;
       }else{
         this.next_page = page + 1;
         this.prev_page = page - 1;
+
         if (this.prev_page <= 0) {
           this.prev_page = 1;
         }
@@ -69,6 +73,7 @@ export class UsersComponent implements OnInit {
           this.users = response.users;
           this.pages = response.pages;
           console.log(this.pages);
+          console.log(page);
           if (page > this.pages) {
             this._router.navigate(['/gente', 1]);
           }
@@ -82,6 +87,10 @@ export class UsersComponent implements OnInit {
           this.status = 'error';
         }
       }
-    )
+    );
   }
+
+
+
+
 }

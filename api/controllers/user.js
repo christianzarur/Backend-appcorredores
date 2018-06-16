@@ -142,6 +142,7 @@ async function followThisUser(identity_user_id, user_id) {
 //DEVOLVER UN LISTADO DE USUARIOS REGISTRADOS
 function getUsers(req, res) {
     var identity_user_id = req.user.sub;
+
     var page = 1;
     if(req.params.page){
         page =req.params.page;
@@ -152,6 +153,7 @@ function getUsers(req, res) {
         if (err) return res.status(500).send({message: 'Error en la peticion'});
 
         if (!users) return res.status(404).send({message: 'No hay usuarios disponibles'});
+        
         followUserIds(identity_user_id).then((value)=>{
             return res.status(200).send({
                 users,
