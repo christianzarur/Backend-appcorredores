@@ -4,19 +4,38 @@
       <div *ngFor = "let user of users" class="item-user">
 
         <ul class="list-group">
-              
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class="image-user pull left">
-              <img src="{{url + 'get-imagen-user/' + user.imagen}}" *ngIf="user.imagen"/>
-              <img src="./assets/user.png" *ngIf="!user.imagen" />
+            <a href="#" class="list-group-item list-group-item-action">
+
+            <img class="rounded-circle" alt="Generic placeholder image" width="50" height="50" 
+            src="{{url + 'get-imagen-user/' + user.imagen}}" *ngIf="user.imagen" />
+            <img class="rounded-circle" alt="Generic placeholder image" width="50" height="50" 
+            src="./assets/user.png" *ngIf="!user.imagen"/>
+            <p> {{user.nombre + ' ' + user.apellido}} </p> <p>{{user.nick}}</p>
+            </a>
+            <div class= "pull-right">
+
+
+            <button type="button" class="btn btn-success" *ngIf="follows.indexOf(user._id) < 0">
+            <i class="fas fa-user-check"></i> Seguir</button>
+
+            <button type="button" class="btn btn-primary" *ngIf= "follows.indexOf(user._id)>= 0"
+            (mouseover)= "mouseEnter(user._id)"(mouseleave)= "mouseLeave(user._id)"
+            [class.btn-danger]="user._id == followUserOver" >
+
+              <span *ngIf="user._id == followUserOver; else siguiendo">
+                <i class="far fa-times-circle"></i> Dejar de seguir
+              </span>
+              <ng-template #siguiendo>
+              <span>
+                <i class="far fa-check-circle"></i> Siguiendo
+              </span>
+              </ng-template>
+            </button>
 
             </div>
-            <p> {{user.nombre + ' ' + user.apellido}} </p> <p>{{user.nick}}</p>
-          </a>
-    
         </ul>
             <!-- SEGUIR Y DEJAR DE SEGUIR USUARIO -->
-
+            
       </div>
 
   </div>
