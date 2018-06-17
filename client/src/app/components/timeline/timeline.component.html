@@ -1,6 +1,20 @@
 <div class="col-lg-8">
   <h1>{{title}}</h1>
 
+  <div id ="publications">
+    <div *ngFor="let publication of publications" class="item-publication">
+      <div class="card" style="width: 18rem;">
+        <!-- <img class="card-img-top" src=".../100px180/" alt="Card image cap"> -->
+        <div class="card-body">
+          <h4 class="card-title">{{publication.user.nombre + ' '+ publication.user.apellido}}</h4>
+          <p class="card-text">{{publication.texto}}</p>
+<a href="#" class="btn btn-outline-danger">
+  <i class="fas fa-heart"></i> Like</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 </div>
 
