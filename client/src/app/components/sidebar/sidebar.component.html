@@ -1,0 +1,79 @@
+<div id="user-card" class="col-lg-4 card card-default text-left">
+  <div class="avatar">
+    <img class="rounded-circle" alt="Generic placeholder image" width="50" height="50" src="{{url + 'get-imagen-user/' + identity.imagen}}"
+    *ngIf="identity.imagen" />
+
+    <img class="rounded-circle" alt="Generic placeholder image" width="50" height="50" src="./assets/user.png" 
+    *ngIf="!identity.imagen"/>
+  </div>
+
+  <div class= "name-surname">
+    <a href="#">
+      {{identity.nombre + ' ' +identity.apellido}}
+    </a>
+    <p class="nickname">{{identity.nick}}</p>
+    <div class="clearfix"></div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="stats" *ngIf='stats'>
+    <div class="following-data">
+      <a href="#">
+        <span class="lablel-stats">
+          Seguidos
+        </span>
+        <span class="number-stats">
+          {{stats.following}}
+        </span>
+      </a>
+
+    </div>
+
+    <div class="following-data">
+      <a href="#">
+        <span class="lablel-stats">
+          Siguidores
+        </span>
+        <span class="number-stats">
+          {{stats.followed}}
+        </span>
+      </a>
+
+    </div>
+
+    <div class="following-data">
+      <a href="#">
+        <span class="lablel-stats">
+          Publicaciones
+        </span>
+        <span class="number-stats">
+          {{stats.publications}}
+        </span>
+      </a>
+
+    </div>
+  </div>
+
+
+</div>
+
+<!-- formulario de publicaciones -->
+
+<div id="new-publicaction" class="col-lg-4 pull-left card card-default sidebar-32">
+
+  <form #newPubForm = "ngForm" (ngSubmit)="onSubmit()" class="col-lg-10">
+    <p>
+      <label>Di algo</label>
+      <textarea name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" required >
+      </textarea>
+      <span *ngIf = "!text.valid && text.touched">El texto es obligatorio</span>
+    </p>
+
+    <p>
+      <label>Sube foto</label>
+      <input type="file" placeholder="Subir imagen"/>
+    </p>
+
+  <button type="submit" class="btn btn-success" [disabled]="!newPubForm.form.valid">Enviar</button>
+  </form>
+</div>

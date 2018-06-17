@@ -3,12 +3,14 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../models/user';
 import { UserService } from '../../services/user.service';
 import { GLOBAL } from '../../services/global';
+import { FollowService } from "../../services/follow.service";
+import { Follow } from "../models/follow";
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
-  providers: [UserService]
+  providers: [UserService, FollowService]
 })
 export class UsersComponent implements OnInit {
   public title: string;
@@ -27,7 +29,8 @@ export class UsersComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _userService: UserService
+    private _userService: UserService,
+    private _followService: FollowService
   ) {
     this.title = 'Gente';
     this.url = GLOBAL.url;
@@ -100,5 +103,47 @@ export class UsersComponent implements OnInit {
     this.followUserOver = 0
   }
 
+  followUser(followed){
+    var follow = new Follow('', this.identity._id, followed);
+
+    this._followService.addFollow(this.token, follow).subscribe(
+      response=>{
+        if (!response.follow) {
+          this.status = 'error';
+        }else{
+          this.status = 'exitoso';
+          this.follows.push(followed);
+        }
+      },
+      error=>{
+        var errorMsj = <any>error;
+        console.log(errorMsj);
+
+        if (errorMsj != null) {
+          this.status = 'error';
+        }
+      }
+    )
+  }
+
+  unfollowUser(followed){
+    this._followService.deleteFollow(this.token, followed).subscribe(
+      response =>{
+        var search = this.follows.indexOf(followed);
+        if (search != -1) {
+          this.follows.splice(search, 1);
+        }
+      },
+      error => {
+        var errorMsj = <any>error;
+        console.log(errorMsj);
+
+        if (errorMsj != null) {
+          this.status = 'error';
+        }
+      }
+
+    )
+  }
 
 }
