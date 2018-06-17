@@ -61,10 +61,19 @@
 
 <div id="new-publicaction" class="col-lg-4 pull-left card card-default sidebar-32">
 
-  <form #newPubForm = "ngForm" (ngSubmit)="onSubmit()" class="col-lg-10">
+  <div class="alert alert-success" *ngIf = "status == 'exitoso'">
+    Publicación enviada correctamente.
+  </div>
+
+  <div class="alert alert-danger" *ngIf="status == 'error'">
+    Publicación no enviada.
+  </div>
+
+
+  <form #newPubForm = "ngForm" (ngSubmit)="onSubmit(newPubForm)" class="col-lg-10">
     <p>
       <label>Di algo</label>
-      <textarea name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" required >
+      <textarea name="texto" #text="ngModel" [(ngModel)]="publication.texto" class="form-control" required >
       </textarea>
       <span *ngIf = "!text.valid && text.touched">El texto es obligatorio</span>
     </p>
