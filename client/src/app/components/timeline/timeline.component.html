@@ -13,7 +13,13 @@
       </a>
       <!-- <img class="card-img-top" src=".../100px180/" alt="Card image cap"> -->
       <div class="card-body">
-        <h4 class="card-title">{{publication.user.nombre + ' '+ publication.user.apellido}}</h4>
+        <div>
+          <span class="card-title">{{publication.user.nombre + ' '+ publication.user.apellido}}</span>
+          &nbsp;|&nbsp;
+          <span class="date">
+            {{(publication.fecha |amFromUnix) | amLocale: 'es' | amTimeAgo}}
+          </span>
+        </div>
         <p class="card-text">{{publication.texto}}</p>
         <a href="#" class="btn btn-outline-danger">
           <i class="fas fa-heart"></i> Like</a>

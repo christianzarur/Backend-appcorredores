@@ -55,6 +55,9 @@ function getPublications(req, res) {
         follows.forEach((follow) => {
             follows_clean.push(follow.seguido);
         });
+
+        follows_clean.push(req.user.sub);
+        
         Publication.find({user: {"$in": follows_clean}}).sort('-fecha').populate('user').paginate(page, itemsPerPage, (err, publications, total) =>{
             if (err) res.status(500).send({message: "Error al devolver publicaciones"});
 
