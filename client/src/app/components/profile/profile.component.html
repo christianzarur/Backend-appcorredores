@@ -33,6 +33,44 @@
         </ng-template>
       </button>
     </div>
+
+<div class="stats" *ngIf='stats'>
+  <div class="following-data">
+    <a href="#">
+      <span class="lablel-stats">
+        Seguidos
+      </span>
+      <span class="number-stats">
+        {{stats.following}}
+      </span>
+    </a>
+
+  </div>
+
+  <div class="following-data">
+    <a href="#">
+      <span class="lablel-stats">
+        Seguidores
+      </span>
+      <span class="number-stats">
+        {{stats.followed}}
+      </span>
+    </a>
+
+  </div>
+
+  <div class="following-data">
+    <a href="#">
+      <span class="lablel-stats">
+        Publicaciones
+      </span>
+      <span class="number-stats">
+        {{stats.publications}}
+      </span>
+    </a>
+
+  </div>
+</div>
   </div>
 </div>
 
