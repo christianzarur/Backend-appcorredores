@@ -4,7 +4,7 @@
       <div *ngFor = "let user of users" class="item-user">
 
         <ul class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">
+            <a [routerLink]="['/perfil', user._id]" class="list-group-item list-group-item-action">
 
             <img class="rounded-circle" alt="Generic placeholder image" width="50" height="50" 
             src="{{url + 'get-imagen-user/' + user.imagen}}" *ngIf="user.imagen" />
