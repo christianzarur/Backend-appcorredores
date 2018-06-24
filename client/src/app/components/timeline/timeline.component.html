@@ -12,10 +12,11 @@
         <div class="card" style="width: 18rem;">
           <a href="#" class="list-group-item list-group-item-action">
     
-            <img class="card-img-top" alt="Generic placeholder image" width="50" height="90" src="{{url + 'get-imagen-user/' + user.imagen}}"
-              *ngIf="publication.imagen" />
-            <img class="card-img-top" alt="Generic placeholder image" width="50" height="140" src="./assets/user.png" *ngIf="!publication.imagen"
+            <img class="card-img-top" alt="Generic placeholder image" width="50" height="90" src="{{url + 'get-image-pub/' + publication.file}}"
+              *ngIf="publication.file" />
+            <img class="card-img-top" alt="Generic placeholder image" width="50" height="140" src="./assets/user.png" *ngIf="!publication.file"
             />
+<img src="{{url + 'get-image-pub/' + publication.file}}" alt="asdadadsadadsadad">
           </a>
           <!-- <img class="card-img-top" src=".../100px180/" alt="Card image cap"> -->
           <div class="card-body">

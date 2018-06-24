@@ -86,7 +86,7 @@
 
     <p>
       <label>Sube foto</label>
-      <input type="file" placeholder="Subir imagen"/>
+      <input type="file" placeholder="Subir imagen" (change)="fileChangeEvent($event)" />
     </p>
 
   <button type="submit" class="btn btn-success" [disabled]="!newPubForm.form.valid">Enviar</button>
