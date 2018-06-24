@@ -53,9 +53,8 @@ export class SidebarComponent implements OnInit {
       response => {
         if (response.publication) {
           //this.publication = response.publication;
-          
-
-          //subir imagen
+          if (this.filesToUpload && this.filesToUpload.length) {
+                      //subir imagen
           this._uploadService.makeFileRequest(this.url + 'upload-image-pub/'+ response.publication._id, [], this.filesToUpload, this.token, 'image')
                               .then((result:any)=>{
                                 this.publication.file = result.image;
@@ -63,6 +62,12 @@ export class SidebarComponent implements OnInit {
                                 form.reset();
                                 this._router.navigate(['/timeline']);
                               });
+          }else{
+          this.status = 'exitoso';
+          form.reset();
+          this._router.navigate(['/timeline']);
+          }
+
         } else {
           this.status = 'error';
         }

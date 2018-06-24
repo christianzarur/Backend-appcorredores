@@ -13,7 +13,7 @@
           <a href="#" class="list-group-item list-group-item-action">
     
             <img class="card-img-top" alt="Generic placeholder image" width="50" height="90" src="{{url + 'get-image-pub/' + publication.file}}"
-              *ngIf="publication.file" />
+            *ngIf="publication.file && showThisImage == publication._id" />
             <img class="card-img-top" alt="Generic placeholder image" width="50" height="140" src="./assets/user.png" *ngIf="!publication.file"
             />
 <img src="{{url + 'get-image-pub/' + publication.file}}" alt="asdadadsadadsadad">
@@ -28,8 +28,35 @@
               </span>
             </div>
             <p class="card-text">{{publication.texto}}</p>
-            <a href="#" class="btn btn-outline-danger">
-              <i class="fas fa-heart"></i> Like</a>
+            <button type="button" class="btn btn-outline-danger">
+            <i class="fas fa-heart"></i> Like</button>
+              <!-- Button trigger modal -->
+              <a type="button" class="btn btn-warning" data-toggle="modal" href="#exampleModalCenter{{publication._id}}" *ngIf="publication.user._id == identity._id">
+              <i class="fas fa-trash-alt"></i>Borrar
+              </a>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModalCenter{{publication._id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalCenterTitle">¿Seguro que la quieres borrar?</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Si la borras no podrás recuperarla
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="button" class="btn btn-danger" (click)="deletePublication(publication._id)" data-dismiss="modal">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
           </div>
         </div>
     

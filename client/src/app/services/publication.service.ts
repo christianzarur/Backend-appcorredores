@@ -38,6 +38,6 @@ export class PublicationService {
     deletePublication(token, id): Observable<any>{
         let headers = new HttpHeaders().set('Content-type', 'application/json')
                                         .set('Authorization', token);
-        return this._http.delete(this.url + 'publications/' + id, { headers: headers });
+        return this._http.delete(this.url + 'publication/' + id, { headers: headers });
     }
 }
