@@ -76,7 +76,7 @@
   </div>
 
 
-  <form #newPubForm = "ngForm" (ngSubmit)="onSubmit(newPubForm); sendPublication($event);" class="col-lg-10">
+<form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm, $event);" class="col-lg-10">
     <p>
       <label>Di algo</label>
       <textarea name="texto" #text="ngModel" [(ngModel)]="publication.texto" class="form-control" required >

@@ -47,7 +47,7 @@ export class SidebarComponent implements OnInit {
     this.SideBarStatus = !this.SideBarStatus;
   } 
 
-  onSubmit(form){
+  onSubmit(form, $event){
 
     this._publicationService.addPublication(this.token, this.publication).subscribe(
       response => {
@@ -61,11 +61,13 @@ export class SidebarComponent implements OnInit {
                                 this.status = 'exitoso';
                                 form.reset();
                                 this._router.navigate(['/timeline']);
+                                this.sended.emit({ send: 'true' });
                               });
           }else{
           this.status = 'exitoso';
           form.reset();
           this._router.navigate(['/timeline']);
+          this.sended.emit({ send: 'true' });
           }
 
         } else {
