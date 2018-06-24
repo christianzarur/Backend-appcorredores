@@ -80,10 +80,11 @@ export class PublicationsComponent implements OnInit {
   }
   public noMore = false;
   viewMore() {
-    if (this.publications.length == (this.total)) {
+    this.page += 1;
+    if (this.page == (this.pages)) {
       this.noMore = true;
     } else {
-      this.page += 1;
+      
     }
     this.getPublications(this.user, this.page, true);
   }

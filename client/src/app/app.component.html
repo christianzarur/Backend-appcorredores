@@ -53,7 +53,7 @@
         {{identity.nombre}}
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="#">
+        <a class="dropdown-item" [routerLink]="['/perfil', identity._id]">
         <i class="fas fa-id-badge"></i> Mi perfil</a>
         <a class="dropdown-item" [routerLink]="['/mis-datos']" >
         <i class="fas fa-user"></i> Mis datos</a>
@@ -68,5 +68,6 @@
 
   </div>
 </nav>
+<!-- <app-newsidebar></app-newsidebar> -->
 
     <router-outlet></router-outlet>

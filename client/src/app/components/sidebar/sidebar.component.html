@@ -1,3 +1,9 @@
+
+
+
+
+
+
 <div id="user-card" class="col-lg-4 card card-default">
   <div class="avatar">
     <img class="rounded-circle" alt="Generic placeholder image" width="50" height="50" src="{{url + 'get-imagen-user/' + identity.imagen}}"
@@ -8,7 +14,7 @@
   </div>
 
   <div class= "name-surname">
-    <a href="#">
+    <a [routerLink]="['/perfil', identity._id]">
       {{identity.nombre + ' ' +identity.apellido}}
     </a>
     <p class="nickname">{{identity.nick}}</p>

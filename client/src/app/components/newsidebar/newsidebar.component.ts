@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output  } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { UserService } from '../../services/user.service';
@@ -6,14 +6,14 @@ import { GLOBAL } from '../../services/global';
 import { Publication } from "../models/publication";
 import { PublicationService } from '../../services/publication.service';
 
-
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css'],
+  selector: 'app-newsidebar',
+  templateUrl: './newsidebar.component.html',
+  styleUrls: ['./newsidebar.component.css'],
   providers: [UserService, PublicationService]
+
 })
-export class SidebarComponent implements OnInit {
+export class NewsidebarComponent implements OnInit {
   public url;
   public identity;
   public token;
@@ -21,9 +21,6 @@ export class SidebarComponent implements OnInit {
   public stats;
   public publication: Publication;
   private SideBarStatus: boolean = true; 
-
-
-
   constructor(
     private _userService: UserService,
     private _publicationService: PublicationService,
@@ -34,18 +31,15 @@ export class SidebarComponent implements OnInit {
     this.token = this._userService.getToken();
     this.stats = this._userService.getStats();
     this.url = GLOBAL.url;
-    this.publication = new Publication("","","","",this.identity._id);
+    this.publication = new Publication("", "", "", "", this.identity._id);
   }
 
   ngOnInit() {
-    console.log("sidebar cargado")
   }
-
   toggleSideBar() {
     this.SideBarStatus = !this.SideBarStatus;
   } 
-
-  onSubmit(form){
+  onSubmit(form) {
 
     this._publicationService.addPublication(this.token, this.publication).subscribe(
       response => {
@@ -71,8 +65,9 @@ export class SidebarComponent implements OnInit {
   //output
   @Output() sended = new EventEmitter;
 
-  sendPublication(event){
+  sendPublication(event) {
     console.log(event);
-    this.sended.emit({send: 'true'});
+    this.sended.emit({ send: 'true' });
   }
+
 }

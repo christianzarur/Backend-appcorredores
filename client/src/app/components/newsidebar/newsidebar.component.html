@@ -1,0 +1,16 @@
+<div class="sidebar" [ngClass]=" SideBarStatus ? 'open' : '' ">
+  <div class="sidebar-menu">
+    <div class="list-group">
+      <a routerLink="/user" class="list-group-item" >Dashboard</a>
+      <a routerLink="/user/profile" class="list-group-item">Perfil</a>
+      <a routerLink="/user/payment-methods" class="list-group-item">Pagos</a>
+      <a routerLink="/user/shipping-methods" class="list-group-item">Ubicaciones</a>
+      <a routerLink="/user/lastest-buys" class="list-group-item">Compras</a>
+    </div>
+  </div>
+  <div class="sidebar-menu-button " style="    padding-top: 27.5vh;" (click)="toggleSideBar()">
+    <div class="sidebar-icon">
+      <i class="fas fa-caret-right"></i>
+    </div>
+  </div>
+</div>

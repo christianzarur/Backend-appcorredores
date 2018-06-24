@@ -1,0 +1,69 @@
+/* SIDE BAR */
+
+.sidebar {
+  position: fixed;
+  height: 70vh;
+  width: 12vw;
+  min-width: 9.5pc;
+  background: white;
+  left: -10vw;
+  z-index: 1;
+  transition: 1s ease-in-out;
+  border-top-right-radius: 1pc;
+  border-bottom-right-radius: 1pc;
+}
+
+.sidebar-menu {
+  position: absolute;
+  height: 70vh;
+  width: 10vw;
+  min-width: 10pc;
+  background: white;
+  left: 0;
+  border-top-right-radius: 1pc;
+  border-bottom-right-radius: 1pc;
+}
+
+.sidebar-menu-button {
+  position: absolute;
+  height: 70vh;
+  width: 2vw;
+  min-width: 2pc;
+  background: #d1d1d1;
+  left: 10vw;
+  border-top-right-radius: 1pc;
+  border-bottom-right-radius: 1pc;
+}
+
+.sidebar-icon {
+  font-size: 4vw;
+  color: white;
+  padding: 0.5pc;
+}
+
+.sidebar .sidebar-icon {
+  transition: all 0.5s ease-in-out;
+}
+
+.sidebar.open {
+  left: 0px;
+  box-shadow: 4px -1px 10px 1px #636363;
+}
+
+.sidebar.open .sidebar-icon {
+  transform: scaleX(-1);
+}
+
+.sidebar-menu {
+  font-family: 'Oswald';
+}
+
+.sidebar-menu a:hover {
+  background: #d1d1d1;
+}
+
+@media ( max-width: 991px) {
+  .caritas-sidebar {
+    display: none;
+  }
+}
