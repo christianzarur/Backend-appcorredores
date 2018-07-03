@@ -1,0 +1,59 @@
+<div class="col-lg-8">
+  <h1>{{title}}</h1>
+  <div class="people" *ngIf="following">
+
+  <!-- LISTADO -->
+    <div *ngFor="let follow of following" class="item-user">
+      <ul class="list-group">
+<a [routerLink]="['/perfil', follow.seguido._id]" class="list-group-item list-group-item-action">
+
+          <img class="rounded-circle" alt="Generic placeholder image" width="50" height="50" src="{{url + 'get-imagen-user/' + follow.seguido.imagen}}"
+          *ngIf="follow.seguido.imagen" />
+          <img class="rounded-circle" alt="Generic placeholder image" width="50" height="50" src="./assets/user.png"                *ngIf="!follow.seguido.imagen"
+          />
+<p> {{follow.seguido.nombre + ' ' + follow.seguido.apellido}} </p>
+<p>{{follow.seguido.nick}}</p>
+        </a>
+
+<div class="pull-right" *ngIf="follow.seguido._id != identity._id">
+
+<button type="button" class="btn btn-success" *ngIf="follows.indexOf(follow.seguido._id) < 0" (click)="followUser(follow.seguido._id)">
+            <i class="fas fa-user-check"></i> Seguir</button>
+
+<button type="button" class="btn btn-primary" *ngIf="follows.indexOf(follow.seguido._id)>= 0" (mouseover)="mouseEnter(follow.seguido._id)"
+ (mouseleave)="mouseLeave(follow.seguido._id)"
+ [class.btn-danger]="follow.seguido._id == followUserOver" (click)="unfollowUser(follow.seguido._id)">
+
+<span *ngIf="follow.seguido._id == followUserOver; else siguiendo">
+              <i class="far fa-times-circle"></i> Dejar de seguir
+            </span>
+            <ng-template #siguiendo>
+              <span>
+                <i class="far fa-check-circle"></i> Siguiendo
+              </span>
+            </ng-template>
+          </button>
+
+        </div>
+      </ul>
+
+
+    </div>
+
+  </div>
+
+  <!-- PAGINATION -->
+  <ul class="pagination justify-content-end">
+    <li *ngIf="page > 1">
+      <a class="page-link" [routerLink]="['/siguiendo',userPageId , prev_page]"> Anterior</a>
+    </li>
+    <li *ngIf="pages != page">
+    <a class="page-link" [routerLink]="['/siguiendo',userPageId , next_page]"> Siguiente</a>
+    </li>
+
+  </ul>
+
+
+  <app-sidebar></app-sidebar>
+
+  <div class="clearfix"></div>

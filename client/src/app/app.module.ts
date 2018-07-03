@@ -17,6 +17,8 @@ import { TimelineComponent } from './components/timeline/timeline.component';
 import { PublicationsComponent } from './components/publications/publications.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { NewsidebarComponent } from './components/newsidebar/newsidebar.component';
+import { FollowingComponent } from './components/following/following.component';
+import { FollowedComponent } from './components/followed/followed.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { NewsidebarComponent } from './components/newsidebar/newsidebar.componen
     TimelineComponent,
     PublicationsComponent,
     ProfileComponent,
-    NewsidebarComponent
+    NewsidebarComponent,
+    FollowingComponent,
+    FollowedComponent
   ],
   imports: [
     BrowserModule,

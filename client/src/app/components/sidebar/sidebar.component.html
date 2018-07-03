@@ -24,8 +24,8 @@
 
   <div class="stats" *ngIf='stats'>
     <div class="following-data">
-      <a href="#">
-        <span class="lablel-stats">
+      <a [routerLink]="['/siguiendo', identity._id, 1]">
+        <span class="label-stats">
           Seguidos
         </span>
         <span class="number-stats">
@@ -36,20 +36,19 @@
     </div>
 
     <div class="following-data">
-      <a href="#">
-        <span class="lablel-stats">
+      <a [routerLink]="['/seguidores', identity._id, 1]">
+        <span class="label-stats">
           Seguidores
         </span>
         <span class="number-stats">
           {{stats.followed}}
         </span>
       </a>
-
     </div>
 
     <div class="following-data">
-      <a href="#">
-        <span class="lablel-stats">
+      <a [routerLink]="['/perfil', identity._id]">
+        <span class="label-stats">
           Publicaciones
         </span>
         <span class="number-stats">
