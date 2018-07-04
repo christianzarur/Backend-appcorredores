@@ -5,6 +5,9 @@ import { HttpClientModule } from "@angular/common/http";
 import { routing, appRoutingProviders } from './app.routing';
 import { MomentModule } from "angular2-moment";
 
+//modulo custom
+import { MessagesModule } from "./messages/messages.module";
+
 //Componentes
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -19,6 +22,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { NewsidebarComponent } from './components/newsidebar/newsidebar.component';
 import { FollowingComponent } from './components/following/following.component';
 import { FollowedComponent } from './components/followed/followed.component';
+
 
 
 @NgModule({
@@ -42,7 +46,8 @@ import { FollowedComponent } from './components/followed/followed.component';
     FormsModule,
     routing,
     HttpClientModule,
-    MomentModule
+    MomentModule,
+    MessagesModule
   ],
   providers: [
     appRoutingProviders
