@@ -42,6 +42,18 @@ export class AddComponent implements OnInit {
 
   ngOnInit() {
     console.log('add component cargado');
+    this.getMyFollows();
+  }
+
+  getMyFollows(){
+    this._followService.getMyFollows(this.token).subscribe(
+      response => {
+        this.follows = response.follows;
+      },
+      error=>{
+        console.log(<any>error);
+      }
+    )
   }
 
 }

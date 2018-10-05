@@ -1,5 +1,28 @@
 <div class="col-lg-10">
   <h3>{{title}}</h3>
 
-  <!-- formulario envio de msj -->
+  <form #formAdd="ngForm" (ngSubmit)= "onSubmit()">
+    <p>
+      <label for="">Para:</label>
+      <!-- listado de seguidores -->
+      <select *ngIf="follows" name="receiver" #receiver="ngModel" [(ngModel)]="message.receiver" class="form-control" required>
+        <option *ngFor="let follow of follows" value="{{follow.user._id}}">
+          {{follow.user.nombre +' '+ follow.user.apellido +' ('+follow.user.nick+ ')'}}
+        </option>
+      </select>
+
+    </p>
+    <p>
+      <label for="">Mensaje</label>
+      <textarea name="text" #text="ngModel" [(ngModel)]="message.text" class="form-control" required>
+      </textarea>
+      <span *ngIf="!text.valid && text.touched">
+        El mensaje es obligatorio
+      </span>
+    </p>
+    <button type="button" class="btn btn-success">Enviar Mensaje</button>
+
+
+  </form>
+
 </div>
